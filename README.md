@@ -3,7 +3,7 @@ This repository contains the data used for "Extraction of UML Class Diagrams fro
 
 For the implementation, check out https://github.com/songyang-dev/uml-translation-3step.
 
-## Getting the dataset
+## Getting the dataset -
 To get the entire dataset, you must download the release containing `dataset.tar.gz`. 
 
 It is too big to be directly committed to git. Find the most recent version in the Releases section (https://github.com/songyang-dev/uml-classes-and-specs/releases).
