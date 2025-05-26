@@ -70,15 +70,3 @@ def display_fragment_and_model(fragment_id, fragments_df, image_base_path="datas
     print(f"📁 Model image path: {model_img_filename}")
     display_model_image(model_name, image_base_path)
 
-def index_zoo_files(zoo_path="dataset/zoo"):
-    """
-    Return a DataFrame with all files in zoo/ and basic filename metadata.
-    """
-    rows = []
-    for fname in os.listdir(zoo_path):
-        fpath = os.path.join(zoo_path, fname)
-        rows.append({
-            "file_name": fname,
-            "file_path": fpath
-        })
-    return pd.DataFrame(rows)
