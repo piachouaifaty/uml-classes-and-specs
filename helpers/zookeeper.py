@@ -41,3 +41,40 @@ def index_zoo_files(zoo_path="dataset/zoo"):
     return pd.DataFrame(rows)
 
 
+def match_models_to_zoo_files(models_df, zoo_files_df):
+    """
+    Match zoo files to known model names (prefix match).
+    Returns:
+        matched_df: files matched to a model
+        unmatched_files_df: zoo files not matched to any model
+        unmatched_models_df: models not matched to any file
+    """
+    matched_rows = []
+    matched_file_names = set()
+    matched_models = set()
+
+    model_names = models_df['name'].unique()
+
+    for model_name in model_names:
+        matches = zoo_files_df[zoo_files_df['file_name'].str.startswith(model_name)]
+        if not matches.empty:
+            matched_models.add(model_name)
+        for _, row in matches.iterrows():
+            matched_rows.append({
+                "model": model_name,
+                "file_name": row["file_name"],
+                "file_path": row["file_path"]
+            })
+            matched_file_names.add(row["file_name"])
+
+    matched_df = pd.DataFrame(matched_rows)
+
+    # Files not matched to any model
+    unmatched_files_df = zoo_files_df[~zoo_files_df['file_name'].isin(matched_file_names)].copy()
+
+    # Models that didn't match any file
+    unmatched_models_df = models_df[~models_df['name'].isin(matched_models)].copy()
+
+    return matched_df, unmatched_files_df, unmatched_models_df
+
+

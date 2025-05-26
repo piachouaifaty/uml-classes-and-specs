@@ -70,3 +70,32 @@ def display_fragment_and_model(fragment_id, fragments_df, image_base_path="datas
     print(f"📁 Model image path: {model_img_filename}")
     display_model_image(model_name, image_base_path)
 
+
+def display_model_fragments(model_name, fragments_df, kind_filter="all"):
+    """
+    Display all fragment images for a given model.
+
+    Parameters:
+        model_name (str): Name of the UML model (e.g., "Make")
+        fragments_df (pd.DataFrame): DataFrame with fragment metadata
+        kind_filter (str): "all", "class", or "rel"
+    """
+    filtered = fragments_df[fragments_df["model"] == model_name]
+
+    if kind_filter in ("class", "rel"):
+        filtered = filtered[filtered["kind"] == kind_filter]
+
+    if filtered.empty:
+        print(f"No fragments found for model '{model_name}' with kind='{kind_filter}'")
+        return
+
+    for _, row in filtered.iterrows():
+        frag_id = row['unique_id']
+        number = row['number']
+        kind = row['kind']
+
+        print("-" * 50)
+        print(f"Fragment number: {number}")
+        print(f"Fragment kind: {kind}")
+        print(f"Fragment ID: {frag_id}")
+        display_fragment_image(frag_id, fragments_df)
