@@ -14,7 +14,7 @@ def print_inheritance_hierarchy(inheritance_edges):
     for edge in inheritance_edges:
         print(f"  {edge[0]} → {edge[1]}")
 
-    # Flip direction for traversal: parent → child
+    # Flip direction for traversal: parent --> child
     print("\nReversing graph for hierarchy traversal (parent --? child)...")
     G_view = G.reverse(copy=False)
 
